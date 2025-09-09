@@ -1,0 +1,21 @@
+spring:
+  application.name: teamup-be
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/teamup?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: user
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.hibernate.orm.connections.pooling: WARN
