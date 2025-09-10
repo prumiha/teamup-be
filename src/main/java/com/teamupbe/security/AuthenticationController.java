@@ -3,18 +3,15 @@ package com.teamupbe.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    private UserService service;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
-    private JwtService jwtService;
-
-    private AuthenticationManager authenticationManager;
 
     @GetMapping("/welcome")
     public String welcome() {
@@ -22,14 +19,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String authenticateAndGetToken(@RequestBody RegisterRequest authRequest) {
-        var authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-        );
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
-        } else {
-            throw new UsernameNotFoundException("Invalid user request!");
-        }
+    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
+        var credentials = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+        var authentication = authenticationManager.authenticate(credentials);
+        return userService.login(loginRequest, authentication);
+    }
+
+    @PostMapping("/register")
+    public RegisterResponse register(@RequestBody RegisterRequest request) {
+        return userService.register(request);
     }
 }

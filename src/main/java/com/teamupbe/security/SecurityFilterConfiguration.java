@@ -3,16 +3,13 @@ package com.teamupbe.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+
+
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -20,9 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityFilterConfiguration {
-    private final PasswordEncoder passwordEncoder;
     private final JwtAuthenticationFilter jwtAuthFilter;
-    private final UserService userService;
+    private final AuthenticationProvider authenticationProvider;
 
 
     @Bean
@@ -34,7 +30,11 @@ public class SecurityFilterConfiguration {
                 // Configure endpoint authorization
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints
-                        .requestMatchers("/authentication/welcome", "/authentication/addNewUser", "/authentication/generateToken").permitAll()
+                        .requestMatchers(
+                                "/authentication/welcome",
+                                "/authentication/login",
+                                "/authentication/register")
+                        .permitAll()
 
                         // Role-based endpoints
                         .requestMatchers("/authentication/user/**").hasAuthority("ROLE_USER")
@@ -48,24 +48,11 @@ public class SecurityFilterConfiguration {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 // Set custom authentication provider
-                .authenticationProvider(authenticationProvider())
+                .authenticationProvider(authenticationProvider)
 
                 // Add JWT filter before Spring Security's default filter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        var provider = new DaoAuthenticationProvider(userService);
-        provider.setPasswordEncoder(passwordEncoder);
-        return provider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
     }
 }
