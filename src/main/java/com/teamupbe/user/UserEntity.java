@@ -1,6 +1,7 @@
-package com.teamupbe.security;
+package com.teamupbe.user;
 
 
+import com.teamupbe.security.RoleEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,11 +25,14 @@ public class UserEntity {
     @Column(name = "username", nullable = false)
     private String username;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "email", nullable = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "phone", nullable = true)
+    private String phone;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

@@ -1,4 +1,4 @@
-package com.teamupbe.security;
+package com.teamupbe.security.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,5 +12,6 @@ public class RegisterRequest {
     private String email;
     private String username;
     private String password;
+    private String phone;
 
 }

@@ -21,18 +21,19 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class JwtService {
 
+    public static final Duration TOKEN_EXPIRATION_PERIOD = Duration.ofDays(7);
     private final Clock clock;
 
     public static final String SECRET = "5367566859703373367639792F423F452848284D6251655468576D5A71347437";
 
     public String generateToken(String email) {
-        Map<String, Object> claims = new HashMap<>();
+        var claims = new HashMap<String, Object>();
         return createToken(claims, email);
     }
 
     private String createToken(Map<String, Object> claims, String email) {
         var now = clock.instant();
-        var tokenExpirationDate = Date.from(now.plus(Duration.ofDays(7)));
+        var tokenExpirationDate = Date.from(now.plus(TOKEN_EXPIRATION_PERIOD));
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(email)

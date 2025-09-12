@@ -1,4 +1,4 @@
-package com.teamupbe.security;
+package com.teamupbe.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

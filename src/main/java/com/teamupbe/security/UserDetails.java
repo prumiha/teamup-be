@@ -1,6 +1,7 @@
 package com.teamupbe.security;
 
 
+import com.teamupbe.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

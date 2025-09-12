@@ -1,17 +1,15 @@
-package com.teamupbe.security;
+package com.teamupbe.security.authentication;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginResponse {
-    private Long id;
-    private String email;
+public class LoginRequest {
+
     private String username;
-    private String token;
+    private String password;
+
 }
