@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ public class UserService {
                 .password(request.getPassword())
                 .email(request.getEmail())
                 .phone(request.getPhone())
+                .fullName(request.getFullName())
                 .build();
         return userRepository.save(user);
     }
@@ -39,5 +41,10 @@ public class UserService {
         userValidator.validatePassword(request.getPassword());
         userValidator.validateEmail(request.getEmail());
         userValidator.validatePhone(request.getPhone());
+        userValidator.validateFullName(request.getFullName());
+    }
+
+    public List<UserEntity> findByIds(List<Long> organizerIds) {
+        return userRepository.findAllByIdIn(organizerIds);
     }
 }

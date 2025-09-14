@@ -1,5 +1,6 @@
-package com.teamupbe.security;
+package com.teamupbe;
 
+import com.teamupbe.activity.ActivityValidationException;
 import com.teamupbe.security.authentication.AuthenticationException;
 import com.teamupbe.user.UserValidationException;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,12 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(UserValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> userValidationException(UserValidationException ex) {
+        return Map.of("error", ex.getMessage());
+    }
+
+    @ExceptionHandler(ActivityValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> activityValidationException(ActivityValidationException ex) {
         return Map.of("error", ex.getMessage());
     }
 }

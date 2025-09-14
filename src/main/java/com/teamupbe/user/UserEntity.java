@@ -34,6 +34,9 @@ public class UserEntity {
     @Column(name = "phone", nullable = true)
     private String phone;
 
+    @Column(name = "full_name", nullable = true)
+    private String fullName;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",
@@ -41,5 +44,4 @@ public class UserEntity {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<RoleEntity> roles = new LinkedHashSet<>();
-
 }

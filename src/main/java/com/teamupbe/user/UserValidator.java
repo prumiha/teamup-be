@@ -11,6 +11,7 @@ public class UserValidator {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     private static final Pattern PHONE_PATTERN = Pattern.compile("^[0-9+\\- ]+$");
     private static final Pattern USERNAME_PATTERN = Pattern.compile("^[a-zA-Z0-9._-]+$");
+    private static final Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-Z0-9._\\- ]+$");
 
     private final UserRepository userRepository;
 
@@ -73,6 +74,20 @@ public class UserValidator {
 
         if (!PHONE_PATTERN.matcher(phone).matches()) {
             throw new UserValidationException("Phone number can only contain digits, '+', '-', and spaces.");
+        }
+    }
+
+    public void validateFullName(String fullName) {
+        if (fullName == null || fullName.isBlank()) {
+            return; // optional field; no validation if empty
+        }
+
+        if (fullName.length() > 20) {
+            throw new UserValidationException("Full name must not exceed 20 characters.");
+        }
+
+        if (!FULL_NAME_PATTERN.matcher(fullName).matches()) {
+            throw new UserValidationException("Full name can only contain letters, numbers, spaces, '.', '-', and '_'.");
         }
     }
 }

@@ -2,9 +2,11 @@ package com.teamupbe.security.authentication;
 
 import com.teamupbe.security.JwtService;
 import com.teamupbe.security.UserDetails;
+import com.teamupbe.user.UserEntity;
 import com.teamupbe.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -52,5 +54,12 @@ public class AuthenticationService implements UserDetailsService {
         } else {
             throw new AuthenticationException("Invalid user request!");
         }
+    }
+
+    public UserEntity getUserMakingCall() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var username = authentication.getName();
+        return userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found: " + username));
     }
 }
