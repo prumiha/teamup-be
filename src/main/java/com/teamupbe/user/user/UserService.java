@@ -22,6 +22,17 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public UserEntity update(UserEntity user, String fullName, String email, String phone) {
+        userValidator.validateEmail(email);
+        userValidator.validatePhone(phone);
+        userValidator.validateFullName(fullName);
+
+        user.setFullName(fullName);
+        user.setEmail(email);
+        user.setPhone(phone);
+        return userRepository.save(user);
+    }
+
     public UserEntity create(RegisterRequest request, Set<RoleEntity> roles){
         validateUser(request);
 
