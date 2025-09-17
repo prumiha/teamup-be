@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,6 +43,16 @@ public class SecurityFilterConfiguration {
                                 "/authentication/login",
                                 "/authentication/register")
                         .permitAll()
+
+                        // Publicly serve uploads via GET/HEAD only
+                        .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
+                        .requestMatchers(HttpMethod.HEAD, "/uploads/**").permitAll()
+
+                        // Disallow write operations from clients to uploads path
+                        .requestMatchers(HttpMethod.POST, "/uploads/**").denyAll()
+                        .requestMatchers(HttpMethod.PUT, "/uploads/**").denyAll()
+                        .requestMatchers(HttpMethod.PATCH, "/uploads/**").denyAll()
+                        .requestMatchers(HttpMethod.DELETE, "/uploads/**").denyAll()
 
                         // Role-based endpoints
                         .requestMatchers("/authentication/user/**").hasAuthority("ROLE_USER")

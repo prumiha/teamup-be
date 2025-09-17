@@ -62,7 +62,7 @@ public class UserProfileService {
                 extension = originalFilename.substring(dot);
             }
 
-            var timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss")
+            var timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")
                     .withZone(ZoneId.of("UTC"))
                     .format(clock.instant());
             var filename = "user-" + userId + "-" + timestamp + extension;
