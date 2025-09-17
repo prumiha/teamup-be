@@ -1,7 +1,7 @@
 package com.teamupbe.security;
 
 
-import com.teamupbe.user.UserEntity;
+import com.teamupbe.user.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -38,21 +38,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Override
     public String getUsername() {
         return username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
     }
 
     @Override

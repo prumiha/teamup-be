@@ -1,6 +1,7 @@
-package com.teamupbe.user;
+package com.teamupbe.user.profile;
 
 
+import com.teamupbe.user.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,10 +9,10 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@Table(name = "user_stats")
+@Table(name = "user_profiles")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserStatsEntity {
+public class UserProfileEntity {
 
     @Id
     @Column(name = "id", nullable = false)
@@ -27,17 +28,4 @@ public class UserStatsEntity {
 
     @Column(name = "bio", nullable = true)
     private String bio;
-
-    @Column(name = "activities_attended")
-    private Integer activitiesAttended;
-
-    @Column(name = "activities_aborted")
-    private Integer activitiesAborted;
-
-    @Column(name = "activities_organized")
-    private Integer activitiesOrganized;
-
-    @Column(name = "rating")
-    private Double rating;
-
 }

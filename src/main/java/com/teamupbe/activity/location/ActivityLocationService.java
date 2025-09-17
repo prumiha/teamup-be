@@ -1,12 +1,7 @@
 package com.teamupbe.activity.location;
 
 import com.teamupbe.activity.ActivityValidationException;
-import com.teamupbe.activity.activity.ActivityRepository;
-import com.teamupbe.activity.participant.ActivityParticipantRepository;
-import com.teamupbe.user.UserEntity;
-import com.teamupbe.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service

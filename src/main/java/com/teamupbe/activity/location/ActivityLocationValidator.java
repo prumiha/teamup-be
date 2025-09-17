@@ -1,17 +1,10 @@
 package com.teamupbe.activity.location;
 
 import com.teamupbe.activity.ActivityValidationException;
-import com.teamupbe.activity.activity.ActivityRepository;
-import com.teamupbe.activity.activity.ActivityStatus;
-import com.teamupbe.security.authentication.AuthenticationService;
-import com.teamupbe.user.UserRepository;
 import com.teamupbe.user.UserValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.Clock;
-import java.time.Instant;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @Component
@@ -33,7 +26,7 @@ public class ActivityLocationValidator {
             throw new UserValidationException("Location name must not exceed 20 characters.");
         }
         if (!NAME_PATTERN.matcher(name).matches()) {
-            throw new ActivityValidationException("Location name can only contain letters, numbers, '.', '-', and '_'.");
+            throw new ActivityValidationException("Location name can only contain letters, numbers, spaces, '.', '-', and '_'.");
         }
         if (activityLocationRepository.findByName(name).isPresent()) {
             throw new ActivityValidationException("Location with that name already exists.");
@@ -44,6 +37,9 @@ public class ActivityLocationValidator {
     public void validateAddress(String address) {
         if (address == null || address.isBlank()) {
             return;
+        }
+        if (!NAME_PATTERN.matcher(address).matches()) {
+            throw new ActivityValidationException("Address can only contain letters, numbers, spaces, '.', '-', and '_'.");
         }
         if (address.length() > ADDRESS_MAX_LENGTH) {
             throw new ActivityValidationException("Address must not exceed " + ADDRESS_MAX_LENGTH + " characters.");

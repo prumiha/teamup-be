@@ -2,8 +2,11 @@ package com.teamupbe.security.authentication;
 
 import com.teamupbe.security.JwtService;
 import com.teamupbe.security.UserDetails;
-import com.teamupbe.user.UserEntity;
-import com.teamupbe.user.UserService;
+import com.teamupbe.security.role.RoleService;
+import com.teamupbe.user.profile.UserProfileService;
+import com.teamupbe.user.stats.UserStatsService;
+import com.teamupbe.user.user.UserEntity;
+import com.teamupbe.user.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,12 +19,18 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService implements UserDetailsService {
     private final JwtService jwtService;
     private final UserService userService;
+    private final RoleService roleService;
+    private final UserProfileService userProfileService;
+    private final UserStatsService userStatsService;
 
 
     public RegisterResponse register(RegisterRequest request) {
         var username = request.getUsername();
-        var user = userService.create(request);
-        var token = jwtService.generateToken(request.getUsername());
+        var token = jwtService.generateToken(username);
+        var roles = roleService.defaultUserRoles();
+        var user = userService.create(request, roles);
+        userProfileService.create(user);
+        userStatsService.create(user);
 
         return RegisterResponse.builder()
                 .id(user.getId())

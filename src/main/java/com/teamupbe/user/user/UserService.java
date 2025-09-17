@@ -1,15 +1,14 @@
-package com.teamupbe.user;
+package com.teamupbe.user.user;
 
-import com.teamupbe.security.UserResponse;
 import com.teamupbe.security.authentication.RegisterRequest;
+import com.teamupbe.security.role.RoleEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -23,15 +22,17 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public UserEntity create(RegisterRequest request){
+    public UserEntity create(RegisterRequest request, Set<RoleEntity> roles){
         validateUser(request);
 
+        var encodedPassword = encoder.encode(request.getPassword());
         var user = UserEntity.builder()
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(encodedPassword)
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .fullName(request.getFullName())
+                .roles(roles)
                 .build();
         return userRepository.save(user);
     }

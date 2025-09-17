@@ -2,12 +2,8 @@ package com.teamupbe.activity.activity;
 
 import com.teamupbe.activity.ActivityValidationException;
 import com.teamupbe.activity.location.ActivityLocationEntity;
-import com.teamupbe.activity.location.ActivityLocationService;
-import com.teamupbe.activity.participant.ActivityParticipantRepository;
-import com.teamupbe.user.UserEntity;
-import com.teamupbe.user.UserRepository;
+import com.teamupbe.user.user.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +13,7 @@ import static com.teamupbe.activity.activity.ActivityStatus.SCHEDULED;
 @Service
 @RequiredArgsConstructor
 public class ActivityService {
-    private final PasswordEncoder encoder;
-    private final UserRepository userRepository;
     private final ActivityRepository activityRepository;
-    private final ActivityParticipantRepository activityParticipantRepository;
     private final ActivityValidator activityValidator;
 
 
@@ -28,7 +21,7 @@ public class ActivityService {
             ActivityCreateRequest request,
             ActivityLocationEntity location,
             List<UserEntity> organizers
-    ){
+    ) {
 
         validateActivity(request, organizers);
 
@@ -65,7 +58,7 @@ public class ActivityService {
                 .orElseThrow(() -> new ActivityValidationException("You are trying to access activity that does not exist."));
     }
 
-    public static ActivityResponse mapActivityEntityToActivityResponse(ActivityEntity entity){
+    public static ActivityResponse mapActivityEntityToActivityResponse(ActivityEntity entity) {
         return ActivityResponse.builder()
                 .name(entity.getName())
                 .description(entity.getDescription())

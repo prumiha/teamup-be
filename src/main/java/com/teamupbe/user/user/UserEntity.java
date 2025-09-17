@@ -1,7 +1,7 @@
-package com.teamupbe.user;
+package com.teamupbe.user.user;
 
 
-import com.teamupbe.security.RoleEntity;
+import com.teamupbe.security.role.RoleEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +22,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)

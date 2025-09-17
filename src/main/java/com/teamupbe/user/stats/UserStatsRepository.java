@@ -1,14 +1,11 @@
-package com.teamupbe.user;
+package com.teamupbe.user.stats;
 
+import com.teamupbe.user.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface UserStatsRepository extends JpaRepository<UserStatsEntity, Long> {
 
-    Optional<UserStatsEntity> findByUser(UserEntity user);
+    UserStatsEntity findByUser(UserEntity user);
 }

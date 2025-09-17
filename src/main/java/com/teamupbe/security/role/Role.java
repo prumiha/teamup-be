@@ -1,4 +1,4 @@
-package com.teamupbe.security;
+package com.teamupbe.security.role;
 
 public enum Role {
     USER,

@@ -1,5 +1,6 @@
-package com.teamupbe.user;
+package com.teamupbe.user.user;
 
+import com.teamupbe.user.UserValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

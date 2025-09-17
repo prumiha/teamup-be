@@ -2,9 +2,8 @@ package com.teamupbe.activity.activity;
 
 import com.teamupbe.activity.ActivityValidationException;
 import com.teamupbe.security.authentication.AuthenticationService;
-import com.teamupbe.user.UserEntity;
-import com.teamupbe.user.UserRepository;
 import com.teamupbe.user.UserValidationException;
+import com.teamupbe.user.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +21,6 @@ public class ActivityValidator {
     public static final int MAX_ACTIVITIES_PER_USER = 3;
     public static final int ACTIVITY_NAME_MAX_LENGTH = 30;
 
-    private final UserRepository userRepository;
     private final ActivityRepository activityRepository;
     private final Clock clock;
     private final AuthenticationService authenticationService;

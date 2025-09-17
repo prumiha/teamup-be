@@ -2,7 +2,7 @@ package com.teamupbe.activity.participant;
 
 
 import com.teamupbe.activity.activity.ActivityEntity;
-import com.teamupbe.user.UserEntity;
+import com.teamupbe.user.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

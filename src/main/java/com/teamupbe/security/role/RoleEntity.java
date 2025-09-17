@@ -1,4 +1,4 @@
-package com.teamupbe.security;
+package com.teamupbe.security.role;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +18,6 @@ public class RoleEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "name", nullable = false)
-    private Role name;
+    @Column(name = "role", nullable = false, unique = true)
+    private Role role;
 }
